@@ -1,5 +1,5 @@
 "use client";
-import DayOne from "./day-1";
+import DayOne from "./day-one";
 
 const Home = () => {
   return <DayOne />;

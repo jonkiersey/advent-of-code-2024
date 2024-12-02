@@ -10,10 +10,15 @@ const PageContainer = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
 }));
 
-const ContentContainer = styled(Box)({
+const ContentContainer = styled(Box)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  display: "flex",
+  flexDirection: "column",
+  gap: 16,
+  padding: 16,
+  maxWidth: "100%",
   flexGrow: 1,
-  boxSizing: "border-box",
-});
+}));
 
 const Footer = styled(Box)({
   justifySelf: "flex-end",
