@@ -91,7 +91,7 @@ const PartTwo = ({ listOne, listTwo }: Props) => {
         <>
           <LongList
             label="Frequencies"
-            list={Object.entries(frequencies).filter(([_, v]) => v > 0)}
+            list={Object.entries(frequencies).filter(([, v]) => v > 0)}
             prettyPrint={([k, v]) => `${k}: ${v}`}
           />
           <ButtonsBox>
