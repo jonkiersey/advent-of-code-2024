@@ -1,5 +1,8 @@
+"use client";
+import DayOne from "./day-1";
+
 const Home = () => {
-  return <div>Home Page</div>;
+  return <DayOne />;
 };
 
 export default Home;

@@ -1,14 +1,7 @@
 "use client";
-import {
-  Box,
-  ThemeProvider,
-  styled,
-  useColorScheme,
-  useMediaQuery,
-} from "@mui/material";
+import { Box, CssBaseline, Link, ThemeProvider, styled } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
-import { useEffect } from "react";
 
 const PageContainer = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -17,27 +10,42 @@ const PageContainer = styled(Box)(({ theme }) => ({
   background: theme.palette.background.default,
 }));
 
+const ContentContainer = styled(Box)({
+  flexGrow: 1,
+  boxSizing: "border-box",
+});
+
+const Footer = styled(Box)({
+  justifySelf: "flex-end",
+  display: "flex",
+  justifyContent: "center",
+  gap: 8,
+  padding: 16,
+});
+
 const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
-  const { mode, setMode } = useColorScheme();
-
-  useEffect(() => {
-    setMode(prefersDarkMode ? "dark" : "light");
-  }, [prefersDarkMode, setMode]);
-
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/icon.png" />
-      </Head>
       <body style={{ margin: 0, height: "100vh" }}>
         <main>
-          <ThemeProvider theme={theme} defaultMode={mode}>
-            <PageContainer>{children}</PageContainer>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Head>
+              <link rel="icon" href="/icon.png" />
+              <title>Advent of Code 2024</title>
+            </Head>
+            <PageContainer>
+              <ContentContainer>{children}</ContentContainer>
+              <Footer>
+                <Link href="https://www.freepik.com/icon/christmas-hat_16757912">
+                  Icon by ryanbagoez
+                </Link>
+              </Footer>
+            </PageContainer>
           </ThemeProvider>
         </main>
       </body>
