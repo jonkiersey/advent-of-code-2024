@@ -1,7 +1,6 @@
 "use client";
 import Day from "@components/day";
-import PartOne from "./part-one";
-import PartTwo from "./part-two";
+import PartOneOrTwo from "./part-one-or-two";
 
 const DayTwo = () => {
   const parseData = (data: string): number[][] => {
@@ -19,8 +18,10 @@ const DayTwo = () => {
     <Day
       title="Day Two: Red-Nosed Reports"
       puzzleInputLink="https://adventofcode.com/2024/day/2/input"
-      PartOne={({ inputData }) => <PartOne reports={inputData} />}
-      PartTwo={({ inputData }) => <PartTwo reports={inputData} />}
+      PartOne={({ inputData }) => <PartOneOrTwo reports={inputData} />}
+      PartTwo={({ inputData }) => (
+        <PartOneOrTwo reports={inputData} useSafetyTolerance />
+      )}
       parseData={parseData}
       prettyPrintInput={(data) =>
         data.map((report, i) => ({

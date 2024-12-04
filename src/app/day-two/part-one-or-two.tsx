@@ -5,9 +5,10 @@ import { useState } from "react";
 
 type Props = {
   reports: number[][];
+  useSafetyTolerance?: boolean;
 };
 
-const PartTwo = ({ reports }: Props) => {
+const PartOneOrTwo = ({ reports, useSafetyTolerance }: Props) => {
   const [reportSafeties, setReportSafeties] = useState<boolean[]>([]);
   const [loadingReportSafeties, setLoadingReportSafeties] = useState(false);
 
@@ -48,7 +49,11 @@ const PartTwo = ({ reports }: Props) => {
 
   const safetyCheckReports = () => {
     setLoadingReportSafeties(true);
-    setReportSafeties(reports.map(safetyCheckWithTolerance));
+    setReportSafeties(
+      reports.map(
+        useSafetyTolerance ? safetyCheckWithTolerance : safetyCheckReport
+      )
+    );
     setLoadingReportSafeties(false);
   };
 
@@ -82,4 +87,4 @@ const PartTwo = ({ reports }: Props) => {
   );
 };
 
-export default PartTwo;
+export default PartOneOrTwo;
