@@ -1,22 +1,38 @@
 "use client";
-import { Box, CssBaseline, Link, ThemeProvider, styled } from "@mui/material";
+import {
+  Box,
+  CssBaseline,
+  Link,
+  ListItem,
+  ThemeProvider,
+  styled,
+} from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
+import NextLink from "next/link";
 
-const PageContainer = styled(Box)(({ theme }) => ({
+const DRAWER_WIDTH = 100 as const;
+
+const AppContainer = styled(Box)({
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
+});
+
+const PageContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
   background: theme.palette.background.default,
+  flexGrow: 1,
 }));
 
 const ContentContainer = styled(Box)(({ theme }) => ({
   color: theme.palette.text.primary,
   display: "flex",
   flexDirection: "column",
+  justifySelf: "right",
   gap: 16,
   padding: 16,
-  maxWidth: "100%",
+  maxWidth: `calc(100% - ${DRAWER_WIDTH}px)`,
   flexGrow: 1,
 }));
 
@@ -27,6 +43,19 @@ const Footer = styled(Box)({
   gap: 8,
   padding: 16,
 });
+
+const NavDrawer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  width: DRAWER_WIDTH,
+  borderRight: `1px solid ${theme.palette.divider}`,
+}));
+
+const NavLinks = [
+  { href: "/day-one", label: "Day 1" },
+  { href: "/day-two", label: "Day 2" },
+];
 
 const RootLayout = ({
   children,
@@ -43,14 +72,23 @@ const RootLayout = ({
               <link rel="icon" href="/icon.png" />
               <title>Advent of Code 2024</title>
             </Head>
-            <PageContainer>
-              <ContentContainer>{children}</ContentContainer>
+            <AppContainer>
+              <PageContainer>
+                <NavDrawer>
+                  {NavLinks.map((link) => (
+                    <ListItem key={link.href}>
+                      <NextLink href={link.href}>{link.label}</NextLink>
+                    </ListItem>
+                  ))}
+                </NavDrawer>
+                <ContentContainer>{children}</ContentContainer>
+              </PageContainer>
               <Footer>
                 <Link href="https://www.freepik.com/icon/christmas-hat_16757912">
                   Icon by ryanbagoez
                 </Link>
               </Footer>
-            </PageContainer>
+            </AppContainer>
           </ThemeProvider>
         </main>
       </body>
