@@ -65,7 +65,7 @@ const PartOneOrTwo = ({ reports, useSafetyTolerance }: Props) => {
           onClick={safetyCheckReports}
           disabled={loadingReportSafeties}
         >
-          Safety Check
+          Safety Check {useSafetyTolerance ? "with Tolerance" : ""}
         </Button>
       </ButtonsBox>
       {reportSafeties.length > 0 && (
