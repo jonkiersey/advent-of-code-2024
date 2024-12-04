@@ -1,15 +1,7 @@
 "use client";
-import {
-  Box,
-  CssBaseline,
-  Link,
-  ListItem,
-  ThemeProvider,
-  styled,
-} from "@mui/material";
+import { Box, CssBaseline, Link, ThemeProvider, styled } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
-import NextLink from "next/link";
 
 const DRAWER_WIDTH = 100 as const;
 
@@ -50,11 +42,22 @@ const NavDrawer = styled(Box)(({ theme }) => ({
   height: "100%",
   width: DRAWER_WIDTH,
   borderRight: `1px solid ${theme.palette.divider}`,
+  padding: 16,
+  gap: 8,
+}));
+
+const NavLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.text.primary,
+  textDecoration: "none",
+  "&:hover": {
+    color: theme.palette.primary.main,
+  },
 }));
 
 const NavLinks = [
   { href: "/day-one", label: "Day 1" },
   { href: "/day-two", label: "Day 2" },
+  { href: "/day-three", label: "Day 3" },
 ];
 
 const RootLayout = ({
@@ -76,9 +79,9 @@ const RootLayout = ({
               <PageContainer>
                 <NavDrawer>
                   {NavLinks.map((link) => (
-                    <ListItem key={link.href}>
-                      <NextLink href={link.href}>{link.label}</NextLink>
-                    </ListItem>
+                    <NavLink key={link.href} href={link.href}>
+                      {link.label}
+                    </NavLink>
                   ))}
                 </NavDrawer>
                 <ContentContainer>{children}</ContentContainer>
