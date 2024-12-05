@@ -1,8 +1,8 @@
 "use client";
 
 import Day from "@components/day";
-import { Typography } from "@mui/material";
 import PartOne from "./part-one";
+import PartTwo from "./part-two";
 
 const parseData = (data: string) => {
   return data.split("\n").map((line) => line.split(""));
@@ -14,7 +14,7 @@ const DayFour = () => {
       title="Day Four: Ceres Search"
       parseData={parseData}
       PartOne={({ inputData }) => <PartOne wordSearch={inputData} />}
-      PartTwo={() => <Typography>Part Two Placeholder</Typography>}
+      PartTwo={({ inputData }) => <PartTwo wordSearch={inputData} />}
       prettyPrintInput={(lines) =>
         lines.map((line, index) => ({
           label: `${index}`,
