@@ -4,7 +4,7 @@ import PuzzleInput from "@components/puzzle-input";
 import OverflowTypography from "./overflow-typography";
 import ScrollBox from "./scroll-box";
 
-type Props<T> = {
+type Props<T, U, V> = {
   parseData: (data: string) => T;
   puzzleInputLink: string;
   title: string;
@@ -12,11 +12,22 @@ type Props<T> = {
     label: string;
     data: string;
   }[];
-  PartOne: (props: { inputData: T }) => JSX.Element;
-  PartTwo: (props: { inputData: T }) => JSX.Element;
+  PartOne: React.ComponentType<T & Partial<U>>;
+  PartTwo: React.ComponentType<T & Partial<V>>;
+  partOnePropOverrides?: U;
+  partTwoPropOverrides?: V;
 };
 
-const Day = <T,>({ parseData, puzzleInputLink, title, prettyPrintInput, PartOne, PartTwo }: Props<T>) => {
+const Day = <T, U, V>({
+  parseData,
+  puzzleInputLink,
+  title,
+  prettyPrintInput,
+  PartOne,
+  PartTwo,
+  partOnePropOverrides,
+  partTwoPropOverrides,
+}: Props<T, U, V>) => {
   const [selectedPart, setSelectedPart] = useState<1 | 2>(1);
   const [inputData, setInputData] = useState<T>();
 
@@ -55,8 +66,8 @@ const Day = <T,>({ parseData, puzzleInputLink, title, prettyPrintInput, PartOne,
             <ToggleButton value={1}>Part 1</ToggleButton>
             <ToggleButton value={2}>Part 2</ToggleButton>
           </ToggleButtonGroup>
-          {selectedPart === 1 && <PartOne inputData={inputData} />}
-          {selectedPart === 2 && <PartTwo inputData={inputData} />}
+          {inputData != null && selectedPart === 1 && <PartOne {...inputData} {...partOnePropOverrides} />}
+          {inputData != null && selectedPart === 2 && <PartTwo {...inputData} {...partTwoPropOverrides} />}
         </>
       )}
     </>

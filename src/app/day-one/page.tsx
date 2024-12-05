@@ -28,12 +28,8 @@ const DayOne = () => {
         { label: "List One", data: data.listOne.join(", ") },
         { label: "List Two", data: data.listTwo.join(", ") },
       ]}
-      PartOne={({ inputData }) => (
-        <PartOne listOne={inputData.listOne} listTwo={inputData.listTwo} />
-      )}
-      PartTwo={({ inputData }) => (
-        <PartTwo listOne={inputData.listOne} listTwo={inputData.listTwo} />
-      )}
+      PartOne={PartOne}
+      PartTwo={PartTwo}
     />
   );
 };

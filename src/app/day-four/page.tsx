@@ -5,7 +5,7 @@ import PartOne from "./part-one";
 import PartTwo from "./part-two";
 
 const parseData = (data: string) => {
-  return data.split("\n").map((line) => line.split(""));
+  return { wordSearch: data.split("\n").map((line) => line.split("")) };
 };
 
 const DayFour = () => {
@@ -13,9 +13,9 @@ const DayFour = () => {
     <Day
       title="Day Four: Ceres Search"
       parseData={parseData}
-      PartOne={({ inputData }) => <PartOne wordSearch={inputData} />}
-      PartTwo={({ inputData }) => <PartTwo wordSearch={inputData} />}
-      prettyPrintInput={(lines) =>
+      PartOne={PartOne}
+      PartTwo={PartTwo}
+      prettyPrintInput={({ wordSearch: lines }) =>
         lines.map((line, index) => ({
           label: `${index}`,
           data: line.join(" "),
