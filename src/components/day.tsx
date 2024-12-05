@@ -45,9 +45,9 @@ const Day = <T,>({
       <PuzzleInput handleInputChange={handleInputChange} />
       {inputData !== undefined && (
         <>
-          <ScrollBox>
+          <ScrollBox sx={{ maxHeight: 400 }}>
             {prettyPrintInput(inputData).map(({ label, data }) => (
-              <OverflowTypography key={label}>
+              <OverflowTypography key={label} fontFamily="monospace">
                 {label}: {data}
               </OverflowTypography>
             ))}

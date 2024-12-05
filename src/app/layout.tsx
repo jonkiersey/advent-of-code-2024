@@ -3,7 +3,7 @@ import { Box, CssBaseline, Link, ThemeProvider, styled } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
 
-const DRAWER_WIDTH = 100 as const;
+const DRAWER_WIDTH = 80 as const;
 
 const AppContainer = styled(Box)({
   display: "flex",
@@ -58,6 +58,7 @@ const NavLinks = [
   { href: "/day-one", label: "Day 1" },
   { href: "/day-two", label: "Day 2" },
   { href: "/day-three", label: "Day 3" },
+  { href: "/day-four", label: "Day 4" },
 ];
 
 const RootLayout = ({
