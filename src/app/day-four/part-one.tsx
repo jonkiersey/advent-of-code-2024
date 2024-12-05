@@ -9,16 +9,10 @@ type Props = {
 };
 
 const PartOne = ({ wordSearch }: Props) => {
-  const [horizontalWordSearch, setHorizontalWordSearch] = useState<string[]>(
-    []
-  );
+  const [horizontalWordSearch, setHorizontalWordSearch] = useState<string[]>([]);
   const [verticalWordSearch, setVerticalWordSearch] = useState<string[]>([]);
-  const [leftDiagonalWordSearch, setLeftDiagonalWordSearch] = useState<
-    string[]
-  >([]);
-  const [rightDiagonalWordSearch, setRightDiagonalWordSearch] = useState<
-    string[]
-  >([]);
+  const [leftDiagonalWordSearch, setLeftDiagonalWordSearch] = useState<string[]>([]);
+  const [rightDiagonalWordSearch, setRightDiagonalWordSearch] = useState<string[]>([]);
   const [hasLoadedWordSearch, setHasLoadedWordSearch] = useState(false);
 
   const [xmasInstances, setXmasInstances] = useState<number | null>(null);
@@ -92,20 +86,13 @@ const PartOne = ({ wordSearch }: Props) => {
 
   const findXmasInstances = () => {
     setHasFoundXmasInstances(true);
-    let instances = 0; // [].match(/mul\(\d{1,3},\d{1,3}\)/g);
-    for (const lines of [
-      horizontalWordSearch,
-      verticalWordSearch,
-      rightDiagonalWordSearch,
-      leftDiagonalWordSearch,
-    ]) {
+    let instances = 0;
+    for (const lines of [horizontalWordSearch, verticalWordSearch, rightDiagonalWordSearch, leftDiagonalWordSearch]) {
       let lineInstances = 0;
       for (const line of lines) {
-        // lineInstances += (line.match(/(XMAS)|(SAMX)/g) || []).length;
         lineInstances += (line.match(/XMAS/g) || []).length;
         lineInstances += (line.match(/SAMX/g) || []).length;
       }
-      console.log("lineInstances", lineInstances);
       instances += lineInstances;
     }
     setXmasInstances(instances);
@@ -114,29 +101,19 @@ const PartOne = ({ wordSearch }: Props) => {
   return (
     <>
       <ButtonsBox>
-        <Button
-          variant="contained"
-          onClick={loadWordSearch}
-          disabled={hasLoadedWordSearch}
-        >
+        <Button variant="contained" onClick={loadWordSearch} disabled={hasLoadedWordSearch}>
           Load Word Search
         </Button>
       </ButtonsBox>
       {horizontalWordSearch.length > 0 && (
-        <OverflowTypography>
-          Horizontal Lines: {horizontalWordSearch.length}
-        </OverflowTypography>
+        <OverflowTypography>Horizontal Lines: {horizontalWordSearch.length}</OverflowTypography>
       )}
       {verticalWordSearch.length > 0 && (
-        <OverflowTypography>
-          Vertical Lines: {verticalWordSearch.length}
-        </OverflowTypography>
+        <OverflowTypography>Vertical Lines: {verticalWordSearch.length}</OverflowTypography>
       )}
       {rightDiagonalWordSearch.length > 0 && (
         <>
-          <OverflowTypography>
-            Right Diagonal Lines: {rightDiagonalWordSearch.length}
-          </OverflowTypography>
+          <OverflowTypography>Right Diagonal Lines: {rightDiagonalWordSearch.length}</OverflowTypography>
           <ScrollBox>
             {rightDiagonalWordSearch.map((line, i) => (
               <OverflowTypography fontFamily="monospace" key={i}>
@@ -148,9 +125,7 @@ const PartOne = ({ wordSearch }: Props) => {
       )}
       {leftDiagonalWordSearch.length > 0 && (
         <>
-          <OverflowTypography>
-            Left Diagonal Lines: {leftDiagonalWordSearch.length}
-          </OverflowTypography>
+          <OverflowTypography>Left Diagonal Lines: {leftDiagonalWordSearch.length}</OverflowTypography>
           <ScrollBox>
             {leftDiagonalWordSearch.map((line, i) => (
               <OverflowTypography fontFamily="monospace" key={i}>
@@ -159,11 +134,7 @@ const PartOne = ({ wordSearch }: Props) => {
             ))}
           </ScrollBox>
           <ButtonsBox>
-            <Button
-              variant="contained"
-              onClick={findXmasInstances}
-              disabled={hasFoundXmasInstances}
-            >
+            <Button variant="contained" onClick={findXmasInstances} disabled={hasFoundXmasInstances}>
               Find {"'XMAS'"} Instances
             </Button>
           </ButtonsBox>
