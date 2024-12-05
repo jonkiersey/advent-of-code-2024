@@ -14,7 +14,7 @@ const DayFour = () => {
       title="Day Four: Ceres Search"
       parseData={parseData}
       PartOne={({ inputData }) => <PartOne wordSearch={inputData} />}
-      PartTwo={({ inputData }) => <Typography>Part Two</Typography>}
+      PartTwo={() => <Typography>Part Two Placeholder</Typography>}
       prettyPrintInput={(lines) =>
         lines.map((line, index) => ({
           label: `${index}`,
