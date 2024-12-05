@@ -4,50 +4,26 @@ import ButtonsBox from "@components/buttons-box";
 import { useState } from "react";
 import ScrollBox from "@components/scroll-box";
 import OverflowTypography from "@components/overflow-typography";
+import { checkPagesAgainstRules, getMiddlePage } from "./utils";
 
 const PartOne = ({ rules, pagesToProduce }: InputData) => {
   const [productionSetsValidities, setProductionSetsValidities] = useState<boolean[]>([]);
   const [haveProductionSetsBeenChecked, setHaveProductionSetsBeenChecked] = useState(false);
 
-  const [middlePages, setMiddlePages] = useState<string[]>([]);
+  const [middlePages, setMiddlePages] = useState<number[]>([]);
   const [haveMiddlePagesBeenFound, setHaveMiddlePagesBeenFound] = useState(false);
-
-  const checkPagesAgainstRules = (productionSet: string[]) => {
-    const ruleChecks = rules.map((rule) => ({
-      firstValue: rule[0],
-      firstFound: false,
-      secondValue: rule[1],
-      secondFoundFirst: false,
-    }));
-    let valid = true;
-    for (const page of productionSet) {
-      for (const ruleCheck of ruleChecks) {
-        if (page === ruleCheck.firstValue) {
-          ruleCheck.firstFound = true;
-        }
-        if (page === ruleCheck.secondValue && !ruleCheck.firstFound) {
-          ruleCheck.secondFoundFirst = true;
-        }
-        if (ruleCheck.firstFound && ruleCheck.secondFoundFirst) {
-          valid = false;
-          break;
-        }
-      }
-    }
-    return valid;
-  };
 
   const checkAllProductionSets = () => {
     setHaveProductionSetsBeenChecked(true);
-    setProductionSetsValidities(pagesToProduce.map(checkPagesAgainstRules));
+    setProductionSetsValidities(pagesToProduce.map((productionSet) => checkPagesAgainstRules(rules, productionSet)));
   };
 
   const getMiddePagesOfValidSets = () => {
     setHaveMiddlePagesBeenFound(true);
-    const foundMiddlePages: string[] = [];
+    const foundMiddlePages = [];
     for (let i = 0; i < pagesToProduce.length; i++) {
       if (productionSetsValidities[i]) {
-        foundMiddlePages.push(pagesToProduce[i][Math.floor(pagesToProduce[i].length / 2)]);
+        foundMiddlePages.push(getMiddlePage(pagesToProduce[i]));
       }
     }
     setMiddlePages(foundMiddlePages);
@@ -89,7 +65,7 @@ const PartOne = ({ rules, pagesToProduce }: InputData) => {
       {middlePages.length > 0 && (
         <>
           <OverflowTypography>Middle Pages: {middlePages.join(" ")}</OverflowTypography>
-          <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + parseInt(page), 0)}</Typography>
+          <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + page, 0)}</Typography>
         </>
       )}
     </>
