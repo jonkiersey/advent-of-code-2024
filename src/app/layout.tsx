@@ -1,5 +1,5 @@
 "use client";
-import { Box, CssBaseline, Link, ThemeProvider, Typography, styled, useMediaQuery, useTheme } from "@mui/material";
+import { Box, CssBaseline, Link, ThemeProvider, styled, useMediaQuery, useTheme } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
 
@@ -117,7 +117,7 @@ const RootLayout = ({
                 <ContentContainer>{children}</ContentContainer>
               </PageContainer>
               <Footer>
-                {footerLinks.map((link, index) => (
+                {footerLinks.map((link) => (
                   <Link key={link.href} href={link.href} variant="body2">
                     {(isMobile && link.mobileLabel) || link.label}
                   </Link>
