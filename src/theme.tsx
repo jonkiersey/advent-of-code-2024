@@ -10,6 +10,19 @@ const theme = createTheme({
       main: "#f5c400",
     },
   },
+  components: {
+    MuiLink: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.text.primary,
+          textDecoration: "none",
+          "&:hover": {
+            color: theme.palette.primary.main,
+          },
+        }),
+      },
+    },
+  },
 });
 
 export default theme;

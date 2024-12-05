@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  Link,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from "@mui/material";
+import { Box, Link, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import PuzzleInput from "@components/puzzle-input";
 import OverflowTypography from "./overflow-typography";
 import ScrollBox from "./scroll-box";
@@ -21,14 +16,7 @@ type Props<T> = {
   PartTwo: (props: { inputData: T }) => JSX.Element;
 };
 
-const Day = <T,>({
-  parseData,
-  puzzleInputLink,
-  title,
-  prettyPrintInput,
-  PartOne,
-  PartTwo,
-}: Props<T>) => {
+const Day = <T,>({ parseData, puzzleInputLink, title, prettyPrintInput, PartOne, PartTwo }: Props<T>) => {
   const [selectedPart, setSelectedPart] = useState<1 | 2>(1);
   const [inputData, setInputData] = useState<T>();
 
@@ -39,9 +27,11 @@ const Day = <T,>({
   return (
     <>
       <Typography variant="h4">{title}</Typography>
-      <Link href={puzzleInputLink} target="_blank">
-        Puzzle Input Data
-      </Link>
+      <Box sx={{ display: "flex" }}>
+        <Link href={puzzleInputLink} target="_blank">
+          Get Puzzle Input Data
+        </Link>
+      </Box>
       <PuzzleInput handleInputChange={handleInputChange} />
       {inputData !== undefined && (
         <>

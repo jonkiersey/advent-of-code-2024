@@ -1,21 +1,39 @@
 "use client";
-import { Box, CssBaseline, Link, ThemeProvider, styled } from "@mui/material";
+import { Box, CssBaseline, Link, ThemeProvider, Typography, styled, useMediaQuery, useTheme } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
 
 const DRAWER_WIDTH = 80 as const;
 
-const AppContainer = styled(Box)({
+const transparent = (color: string, opacity: number): string => {
+  const red = parseInt(color.slice(1, 3), 16);
+  const green = parseInt(color.slice(3, 5), 16);
+  const blue = parseInt(color.slice(5, 7), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+};
+
+const AppContainer = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
-});
-
-const PageContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  background: theme.palette.background.default,
-  flexGrow: 1,
+  backgroundImage: `
+    linear-gradient(to bottom, ${theme.palette.background.default}, rgba(255, 255, 255, 0.1)),
+    linear-gradient(to right, ${theme.palette.background.default}, ${transparent(theme.palette.primary.main, 0.1)}, ${
+    theme.palette.background.default
+  })
+  `,
+  [theme.breakpoints.down("md")]: {
+    backgroundImage: `
+      linear-gradient(to bottom, ${theme.palette.background.default}, rgba(255, 255, 255, 0.1)),
+      linear-gradient(to right, ${theme.palette.background.default}, ${transparent(theme.palette.primary.main, 0.1)})
+    `,
+  },
 }));
+
+const PageContainer = styled(Box)({
+  display: "flex",
+  flexGrow: 1,
+});
 
 const ContentContainer = styled(Box)(({ theme }) => ({
   color: theme.palette.text.primary,
@@ -32,7 +50,7 @@ const Footer = styled(Box)({
   justifySelf: "flex-end",
   display: "flex",
   justifyContent: "center",
-  gap: 8,
+  gap: 16,
   padding: 16,
 });
 
@@ -46,19 +64,29 @@ const NavDrawer = styled(Box)(({ theme }) => ({
   gap: 8,
 }));
 
-const NavLink = styled(Link)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  textDecoration: "none",
-  "&:hover": {
-    color: theme.palette.primary.main,
-  },
-}));
-
-const NavLinks = [
+const navLinks = [
   { href: "/day-one", label: "Day 1" },
   { href: "/day-two", label: "Day 2" },
   { href: "/day-three", label: "Day 3" },
   { href: "/day-four", label: "Day 4" },
+  { href: "/day-five", label: "Day 5" },
+];
+
+const footerLinks = [
+  {
+    href: "https://adventofcode.com/",
+    label: "Advent of Code",
+    mobileLabel: "AoC",
+  },
+  {
+    href: "https://github.com/jonkiersey/advent-of-code-2024",
+    label: "Source on GitHub",
+    mobileLabel: "GitHub",
+  },
+  {
+    href: "https://www.freepik.com/icon/christmas-hat_16757912",
+    label: "Icon by ryanbagoez",
+  },
 ];
 
 const RootLayout = ({
@@ -66,6 +94,7 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
   return (
     <html lang="en">
       <body style={{ margin: 0, height: "100vh" }}>
@@ -79,18 +108,20 @@ const RootLayout = ({
             <AppContainer>
               <PageContainer>
                 <NavDrawer>
-                  {NavLinks.map((link) => (
-                    <NavLink key={link.href} href={link.href}>
+                  {navLinks.map((link) => (
+                    <Link key={link.href} href={link.href}>
                       {link.label}
-                    </NavLink>
+                    </Link>
                   ))}
                 </NavDrawer>
                 <ContentContainer>{children}</ContentContainer>
               </PageContainer>
               <Footer>
-                <Link href="https://www.freepik.com/icon/christmas-hat_16757912">
-                  Icon by ryanbagoez
-                </Link>
+                {footerLinks.map((link, index) => (
+                  <Link key={link.href} href={link.href} variant="body2">
+                    {(isMobile && link.mobileLabel) || link.label}
+                  </Link>
+                ))}
               </Footer>
             </AppContainer>
           </ThemeProvider>
