@@ -5,7 +5,12 @@ type Props = {
 };
 const PuzzleInput = ({ handleInputChange }: Props) => {
   return (
-    <TextField label="Puzzle Input" multiline maxRows={4} onChange={(event) => handleInputChange(event.target.value)} />
+    <TextField
+      label="Puzzle Input"
+      multiline
+      maxRows={4}
+      onInput={(event: React.ChangeEvent<HTMLInputElement>) => handleInputChange(event.target.value)}
+    />
   );
 };
 
