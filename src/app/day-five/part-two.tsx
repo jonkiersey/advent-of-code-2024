@@ -1,9 +1,9 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { InputData } from "./types";
-import ButtonsBox from "@components/buttons-box";
 import { useState } from "react";
 import ScrollBox from "@components/scroll-box";
 import { checkPagesAgainstRules, getMiddlePage } from "./utils";
+import Step from "@components/step";
 
 const PartTwo = ({ rules, pagesToProduce }: InputData) => {
   const [productionSetsValidities, setProductionSetsValidities] = useState<boolean[]>([]);
@@ -56,18 +56,13 @@ const PartTwo = ({ rules, pagesToProduce }: InputData) => {
 
   return (
     <>
-      <ButtonsBox>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={checkAllProductionSets}
-          disabled={haveProductionSetsBeenChecked}
-        >
-          Check All Production Sets
-        </Button>
-      </ButtonsBox>
-      {productionSetsValidities.length > 0 && (
-        <>
+      <Step
+        buttonLabel="Check All Production Sets"
+        buttonOnClick={checkAllProductionSets}
+        buttonDisabled={haveProductionSetsBeenChecked}
+        shouldRender
+      >
+        {productionSetsValidities.length > 0 && (
           <ScrollBox sx={{ maxHeight: 200 }}>
             {productionSetsValidities.map((validity, index) => (
               <Typography key={index}>
@@ -75,20 +70,15 @@ const PartTwo = ({ rules, pagesToProduce }: InputData) => {
               </Typography>
             ))}
           </ScrollBox>
-          <ButtonsBox>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={fixInvalidProductionSets}
-              disabled={hasFixedProductionSets}
-            >
-              Fix Invalid Production Sets
-            </Button>
-          </ButtonsBox>
-        </>
-      )}
-      {fixedProductionSets.length > 0 && (
-        <>
+        )}
+      </Step>
+      <Step
+        buttonLabel="Fix Invalid Production Sets"
+        buttonOnClick={fixInvalidProductionSets}
+        buttonDisabled={hasFixedProductionSets}
+        shouldRender={productionSetsValidities.length > 0}
+      >
+        {fixedProductionSets.length > 0 && (
           <ScrollBox>
             {fixedProductionSets.map((productionSet, index) => (
               <Typography key={index}>
@@ -96,19 +86,21 @@ const PartTwo = ({ rules, pagesToProduce }: InputData) => {
               </Typography>
             ))}
           </ScrollBox>
-          <ButtonsBox>
-            <Button variant="contained" color="primary" onClick={getMiddlePages} disabled={hasGottenMiddlePages}>
-              Get Middle Pages
-            </Button>
-          </ButtonsBox>
-        </>
-      )}
-      {middlePages.length > 0 && (
-        <>
-          <Typography>Middle Pages: {middlePages.join(" ")}</Typography>
-          <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + page, 0)}</Typography>
-        </>
-      )}
+        )}
+      </Step>
+      <Step
+        buttonLabel="Get Middle Pages"
+        buttonOnClick={getMiddlePages}
+        buttonDisabled={hasGottenMiddlePages}
+        shouldRender={fixedProductionSets.length > 0}
+      >
+        {middlePages.length > 0 && (
+          <>
+            <Typography>Middle Pages: {middlePages.join(" ")}</Typography>
+            <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + page, 0)}</Typography>
+          </>
+        )}
+      </Step>
     </>
   );
 };

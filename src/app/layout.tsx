@@ -70,6 +70,7 @@ const navLinks = [
   { href: "/day-three", label: "Day 3" },
   { href: "/day-four", label: "Day 4" },
   { href: "/day-five", label: "Day 5" },
+  { href: "/day-six", label: "Day 6" },
 ];
 
 const footerLinks = [
@@ -94,7 +95,7 @@ const RootLayout = ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
+  const isMobile = useMediaQuery(useTheme().breakpoints.down("sm"));
   return (
     <html lang="en">
       <body style={{ margin: 0, height: "100vh" }}>

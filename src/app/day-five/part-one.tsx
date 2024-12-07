@@ -1,10 +1,10 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { InputData } from "./types";
-import ButtonsBox from "@components/buttons-box";
 import { useState } from "react";
 import ScrollBox from "@components/scroll-box";
 import OverflowTypography from "@components/overflow-typography";
 import { checkPagesAgainstRules, getMiddlePage } from "./utils";
+import Step from "@components/step";
 
 const PartOne = ({ rules, pagesToProduce }: InputData) => {
   const [productionSetsValidities, setProductionSetsValidities] = useState<boolean[]>([]);
@@ -31,18 +31,13 @@ const PartOne = ({ rules, pagesToProduce }: InputData) => {
 
   return (
     <>
-      <ButtonsBox>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={checkAllProductionSets}
-          disabled={haveProductionSetsBeenChecked}
-        >
-          Check All Production Sets
-        </Button>
-      </ButtonsBox>
-      {productionSetsValidities.length > 0 && (
-        <>
+      <Step
+        buttonLabel="Check All Production Sets"
+        buttonOnClick={checkAllProductionSets}
+        buttonDisabled={haveProductionSetsBeenChecked}
+        shouldRender
+      >
+        {productionSetsValidities.length > 0 && (
           <ScrollBox sx={{ maxHeight: 200 }}>
             {productionSetsValidities.map((validity, index) => (
               <Typography key={index}>
@@ -50,24 +45,21 @@ const PartOne = ({ rules, pagesToProduce }: InputData) => {
               </Typography>
             ))}
           </ScrollBox>
-          <ButtonsBox>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={getMiddePagesOfValidSets}
-              disabled={haveMiddlePagesBeenFound}
-            >
-              Get Middle Pages
-            </Button>
-          </ButtonsBox>
-        </>
-      )}
-      {middlePages.length > 0 && (
-        <>
-          <OverflowTypography>Middle Pages: {middlePages.join(" ")}</OverflowTypography>
-          <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + page, 0)}</Typography>
-        </>
-      )}
+        )}
+      </Step>
+      <Step
+        buttonLabel="Get Middle Pages"
+        buttonOnClick={getMiddePagesOfValidSets}
+        buttonDisabled={haveMiddlePagesBeenFound}
+        shouldRender={productionSetsValidities.length > 0}
+      >
+        {middlePages.length > 0 && (
+          <>
+            <OverflowTypography>Middle Pages: {middlePages.join(" ")}</OverflowTypography>
+            <Typography>Sum of Middle Pages: {middlePages.reduce((acc, page) => acc + page, 0)}</Typography>
+          </>
+        )}
+      </Step>
     </>
   );
 };
