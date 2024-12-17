@@ -1,7 +1,8 @@
-import { Floorplan } from "@app/types/day-six";
-
 export type InputData = {
-  floorplan: Floorplan;
+  floorplan: string[][];
 };
 
-// export const DirectionSymbols = ["^", "v", "<", ">"];
+export type Coordinates = { x: number; y: number };
+
+export type Direction = "up" | "down" | "left" | "right";
+export const DirectionSymbols = ["^", "v", "<", ">"];

@@ -1,10 +1,9 @@
 "use client";
-import { Box, CssBaseline, ThemeProvider, styled } from "@mui/material";
+import { Box, CssBaseline, Link, ThemeProvider, styled, useMediaQuery, useTheme } from "@mui/material";
 import theme from "../theme";
 import Head from "next/head";
-import Footer from "@components/footer";
-import NavigationDrawer, { DRAWER_WIDTH } from "@components/navigation-drawer";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const DRAWER_WIDTH = 80 as const;
 
 const transparent = (color: string, opacity: number): string => {
   const red = parseInt(color.slice(1, 3), 16);
@@ -47,32 +46,85 @@ const ContentContainer = styled(Box)(({ theme }) => ({
   flexGrow: 1,
 }));
 
-const queryClient = new QueryClient();
+const Footer = styled(Box)({
+  justifySelf: "flex-end",
+  display: "flex",
+  justifyContent: "center",
+  gap: 16,
+  padding: 16,
+});
+
+const NavDrawer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",
+  width: DRAWER_WIDTH,
+  borderRight: `1px solid ${theme.palette.divider}`,
+  padding: 16,
+  gap: 8,
+}));
+
+const navLinks = [
+  { href: "/day-one", label: "Day 1" },
+  { href: "/day-two", label: "Day 2" },
+  { href: "/day-three", label: "Day 3" },
+  { href: "/day-four", label: "Day 4" },
+  { href: "/day-five", label: "Day 5" },
+  { href: "/day-six", label: "Day 6" },
+];
+
+const footerLinks = [
+  {
+    href: "https://adventofcode.com/",
+    label: "Advent of Code",
+    mobileLabel: "AoC",
+  },
+  {
+    href: "https://github.com/jonkiersey/advent-of-code-2024",
+    label: "Source on GitHub",
+    mobileLabel: "GitHub",
+  },
+  {
+    href: "https://www.freepik.com/icon/christmas-hat_16757912",
+    label: "Icon by ryanbagoez",
+  },
+];
 
 const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const isMobile = useMediaQuery(useTheme().breakpoints.down("sm"));
   return (
     <html lang="en">
       <body style={{ margin: 0, height: "100vh" }}>
         <main>
           <ThemeProvider theme={theme}>
-            <QueryClientProvider client={queryClient}>
-              <CssBaseline />
-              <Head>
-                <link rel="icon" href="/icon.png" />
-                <title>Advent of Code 2024</title>
-              </Head>
-              <AppContainer>
-                <PageContainer>
-                  <NavigationDrawer />
-                  <ContentContainer>{children}</ContentContainer>
-                </PageContainer>
-                <Footer />
-              </AppContainer>
-            </QueryClientProvider>
+            <CssBaseline />
+            <Head>
+              <link rel="icon" href="/icon.png" />
+              <title>Advent of Code 2024</title>
+            </Head>
+            <AppContainer>
+              <PageContainer>
+                <NavDrawer>
+                  {navLinks.map((link) => (
+                    <Link key={link.href} href={link.href}>
+                      {link.label}
+                    </Link>
+                  ))}
+                </NavDrawer>
+                <ContentContainer>{children}</ContentContainer>
+              </PageContainer>
+              <Footer>
+                {footerLinks.map((link) => (
+                  <Link key={link.href} href={link.href} variant="body2">
+                    {(isMobile && link.mobileLabel) || link.label}
+                  </Link>
+                ))}
+              </Footer>
+            </AppContainer>
           </ThemeProvider>
         </main>
       </body>
