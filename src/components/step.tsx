@@ -1,24 +1,37 @@
-import { Button } from "@mui/material";
+import { useState } from "react";
 import ButtonsBox from "./buttons-box";
+import { LoadingButton } from "@mui/lab";
 
 type Props = {
   buttonOnClick: () => void;
   buttonLabel: string;
-  buttonDisabled: boolean;
+  buttonDisabled?: boolean;
+  loading?: boolean;
   shouldRender: boolean;
-  // shouldRenderChildren?: boolean;
   children?: React.ReactNode;
 };
-// const Step = ({ buttonOnClick, buttonLabel, buttonDisabled, shouldRender, shouldRenderChildren, children }: Props) => {
-const Step = ({ buttonOnClick, buttonLabel, buttonDisabled, shouldRender, children }: Props) => {
+const Step = ({ buttonOnClick, buttonLabel, buttonDisabled, loading, shouldRender, children }: Props) => {
+  const [hasBeenClicked, setHasBeenClicked] = useState(false);
+
+  const onClick = () => {
+    setHasBeenClicked(true);
+    buttonOnClick();
+  };
+
   if (!shouldRender) return null;
 
   return (
     <>
       <ButtonsBox>
-        <Button variant="contained" color="primary" onClick={buttonOnClick} disabled={buttonDisabled}>
+        <LoadingButton
+          variant="contained"
+          color="primary"
+          onClick={onClick}
+          loading={loading}
+          disabled={buttonDisabled || hasBeenClicked}
+        >
           {buttonLabel}
-        </Button>
+        </LoadingButton>
       </ButtonsBox>
       {children}
     </>

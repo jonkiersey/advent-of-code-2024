@@ -1,4 +1,4 @@
-import { Coordinates, Direction, DirectionSymbols, InputData } from "./types";
+import { Coordinates, Direction, DirectionSymbols, Floorplan } from "@app/types/day-six";
 
 export const getNextCoordinates = (currentCoordinates: Coordinates, direction: Direction): Coordinates => {
   let x = currentCoordinates.x;
@@ -49,7 +49,7 @@ export const getRightTurnDirection = (currentDirection: Direction): Direction =>
 };
 
 export const getStartingValues = (
-  floorplan: InputData["floorplan"]
+  floorplan: Floorplan
 ): {
   startingCoordinates: Coordinates;
   direction: Direction;
