@@ -49,7 +49,8 @@ const Day = <T, U, V>({
           <ScrollBox sx={{ maxHeight: 400 }}>
             {prettyPrintInput(inputData).map(({ label, data }) => (
               <OverflowTypography key={label} fontFamily="monospace">
-                {label}: {data}
+                {label && label + ": "}
+                {data}
               </OverflowTypography>
             ))}
           </ScrollBox>
