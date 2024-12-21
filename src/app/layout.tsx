@@ -72,6 +72,7 @@ const navLinks = [
   { href: "/day-five", label: "Day 5" },
   { href: "/day-six", label: "Day 6" },
   { href: "/day-seven", label: "Day 7" },
+  { href: "/day-eight", label: "Day 8" },
 ];
 
 const footerLinks = [
